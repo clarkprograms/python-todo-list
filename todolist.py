@@ -101,13 +101,17 @@ def view_all_tasks():
     print_task_list("Completed tasks:", True)
 
 if os.path.isfile("tasks.json"):
-    with open("tasks.json", "r", encoding="utf-8") as file:
-        task_list = json.load(file)
-        
-        print_task_list("Your tasks loaded from the previous session:\n")
-        print_task_list("Completed tasks:", True)
-        print_task_list("Incomplete tasks:", False)
-        print("\n")
+    try:
+        with open("tasks.json", "r", encoding="utf-8") as file:
+            task_list = json.load(file)
+            
+            print_task_list("Your tasks loaded from the previous session:\n")
+            print_task_list("Completed tasks:", True)
+            print_task_list("Incomplete tasks:", False)
+            print("\n")
+    except json.JSONDecodeError:
+            print("Error: tasks.json is not a valid JSON file. Starting with an empty task list.")
+            task_list = []
 
 while True:
     command_input = input("input a command: ")
